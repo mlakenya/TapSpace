@@ -25,8 +25,6 @@
       </div>
     </div>
     <script>
-      var tg = window.Telegram.WebApp;
-      tg.expand();
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
@@ -103,6 +101,16 @@
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
+        var tg = window.Telegram.WebApp;
+        tg.expand();
+        var user = tg.initDataUnsafe.user;
+        p = document.createElement("p");
+        p.innerHTML = tg.platform;
+        p.style.position = "absolute";
+
+        p.style.top = "0"
+        container.append(p);
+
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
               }).then((unityInstance) => {
