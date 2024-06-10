@@ -106,6 +106,7 @@
       script.onload = () => {
         var tg = window.Telegram.WebApp;
         tg.expand();
+        tg.enableClosingConfirmation();
         var user = tg.initDataUnsafe.user;
 
         // if (tg.platform !== "android" && tg.platform !== "ios") {
