@@ -24,7 +24,7 @@
         <div id="unity-build-title">Tap Space</div>
       </div>
     </div>
-    <div id="shit" style="display: none;">
+    <div id="desktop-stub" style="display: none;">
       Hello world
     </div>
     <script>
@@ -107,14 +107,27 @@
         var tg = window.Telegram.WebApp;
         tg.expand();
         tg.enableClosingConfirmation();
+        tg.onEvent('viewportChanged', () => WebApp.expand())
+        tg.headerColor = "#212121"
+
         var user = tg.initDataUnsafe.user;
 
-        // if (tg.platform !== "android" && tg.platform !== "ios") {
-        //     container.parentNode.removeChild(container);
-        //     var shit = document.getElementById('shit');
-        //     shit.style.display = "block";
-        // }
-        // else {
+        const url = new URL(window.location.href);
+
+        const params = new URLSearchParams(url.search);
+        const master_id = params.get('master');
+
+        window.history.replaceState(null, '', window.location.pathname);
+
+        if (
+          tg.platform !== "android" && tg.platform !== "ios" || // 1) Check telegram platform
+          !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) // 2) Check via userAgent
+        ) { 
+            container.parentNode.removeChild(container);
+            var shit = document.getElementById('desktop-stub');
+            shit.style.display = "block";
+        }
+        else {
           createUnityInstance(canvas, config, (progress) => {
             progressBarFull.style.width = 100 * progress + "%";
                 }).then((unityInstance) => {
@@ -125,7 +138,7 @@
                 }).catch((message) => {
                   alert(message);
                 });
-        // }
+        }
       };
 
       document.body.appendChild(script);
