@@ -107,7 +107,7 @@
         var tg = window.Telegram.WebApp;
         tg.expand();
         tg.enableClosingConfirmation();
-        tg.onEvent('viewportChanged', () => WebApp.expand())
+        tg.onEvent('viewportChanged', () => tg.expand())
         tg.headerColor = "#212121"
 
         var user = tg.initDataUnsafe.user;
