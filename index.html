@@ -7,6 +7,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="stylesheet" href="stub.css">
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -33,7 +34,7 @@
       </div>
       <div class="aconteiner">
           <a href="https://t.me/Tap_Space"><img src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(2).png"/></a>
-          <a><img src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(1).png"/></a>            
+          <a href="https://x.com/pg_primegames"><img src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(1).png"/></a>            
       </div>
     </div>
     <script>
@@ -128,17 +129,8 @@
           tg.platform !== "android" && tg.platform !== "ios" || // 1) Check telegram platform
           !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) // 2) Check via userAgent
         ) { 
-            container.parentNode.removeChild(container);
             var stub = document.getElementById('desktop-stub');
-
-            var head  = document.getElementsByTagName('head')[0];
-            var link  = document.createElement('link');
-            link.id   = "stub";
-            link.rel  = 'stylesheet';
-            link.type = 'text/css';
-            link.href = 'stub.css';
-            link.media = 'all';
-            head.appendChild(link);
+            container.parentNode.removeChild(container);
 
             stub.style.display = "flex";
             stub.style.flexDirection = "column";
