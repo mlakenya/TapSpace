@@ -18,7 +18,7 @@
     text-align: center;
     padding: 10px;
     max-width: 400px;
-    width: 90%;
+    width: 75%;
     flex-direction: column;
     align-items: center;
 }
@@ -34,7 +34,7 @@
 }
 .aconteiner {
     display: flex;
-    width: 100%;
+    width: 75%;
     max-width: 445px;
     height: auto;
     justify-content: center;
