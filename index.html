@@ -7,7 +7,6 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <link rel="stylesheet" href="stub.css">
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -25,7 +24,7 @@
         <div id="unity-build-title">Tap Space</div>
       </div>
     </div>
-    <div class="desktop-stub" id="desktop-stub">
+    <div class="desktop-stub" id="desktop-stub" style="display: none;">
       <div class="divimg">
         <img class="img-container" src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/Robot.png" />
       </div>
@@ -131,6 +130,16 @@
         ) { 
             container.parentNode.removeChild(container);
             var stub = document.getElementById('desktop-stub');
+
+            var head  = document.getElementsByTagName('head')[0];
+            var link  = document.createElement('link');
+            link.id   = "stub";
+            link.rel  = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'stub.css';
+            link.media = 'all';
+            head.appendChild(link);
+
             stub.style.display = "flex";
             stub.style.flexDirection = "column";
         }
