@@ -125,8 +125,32 @@
         else {
           tg.expand();
           tg.enableClosingConfirmation();
-          tg.onEvent('viewportChanged', () => tg.expand())
+          // tg.onEvent('viewportChanged', () => tg.expand())
           tg.headerColor = "#212121"
+
+          const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
+
+          if (!isScrollable) {
+            /*
+            Set the document's height to 100 % of
+            the viewport height plus one extra pixel
+            to make it scrollable.
+            */
+            document.documentElement.style.setProperty(
+              "height",
+              "calc(100vh + 1px)",
+              "important"
+            );
+          }
+
+          function preventCollapse(event) {
+            if (window.scrollY === 0) {
+              window.scrollTo(0, 1);
+            }
+          }
+
+          const scrollableElement = document.querySelector(".scrollable-element");
+          scrollableElement.addEventListener("touchstart", preventCollapse);
 
           createUnityInstance(canvas, config, (progress) => {
             progressBarFull.style.width = 100 * progress + "%";
