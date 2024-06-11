@@ -17,7 +17,7 @@
     display: flex;
     text-align: center;
     padding: 10px;
-    max-width: 400px;
+    max-width: 320px;
     width: 65%;
     flex-direction: column;
     align-items: center;
@@ -28,14 +28,14 @@
     align-items: center;
     width: 100%;
     height: auto;
-    max-width: 350px; /* Максимальная ширина SVG */
+    max-width: 320px; /* Максимальная ширина SVG */
     margin-bottom: 10px;
     flex-direction: column;
 }
 .aconteiner {
     display: flex;
     width: 65%;
-    max-width: 445px;
+    max-width: 320px;
     height: auto;
     justify-content: center;
 }
