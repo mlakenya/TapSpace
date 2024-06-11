@@ -7,6 +7,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="stylesheet" href="stub.css">
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -24,8 +25,17 @@
         <div id="unity-build-title">Tap Space</div>
       </div>
     </div>
-    <div id="desktop-stub" style="display: none;">
-      Hello world
+    <div class="desktop-stub" id="desktop-stub">
+      <div class="divimg">
+        <img class="img-container" src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/Robot.png" />
+      </div>
+      <div class="divimg">
+          <img src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/play-on-phone.png">
+      </div>
+      <div class="aconteiner">
+          <a><img src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(2).png"/></a>
+          <a><img src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(1).png"/></a>            
+      </div>
     </div>
     <script>
       var container = document.querySelector("#unity-container");
@@ -105,10 +115,6 @@
       script.src = loaderUrl;
       script.onload = () => {
         var tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.enableClosingConfirmation();
-        tg.onEvent('viewportChanged', () => tg.expand())
-        tg.headerColor = "#212121"
 
         var user = tg.initDataUnsafe.user;
 
@@ -124,10 +130,16 @@
           !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) // 2) Check via userAgent
         ) { 
             container.parentNode.removeChild(container);
-            var shit = document.getElementById('desktop-stub');
-            shit.style.display = "block";
+            var stub = document.getElementById('desktop-stub');
+            stub.style.display = "flex";
+            stub.style.flexDirection = "column";
         }
         else {
+          tg.expand();
+          tg.enableClosingConfirmation();
+          tg.onEvent('viewportChanged', () => tg.expand())
+          tg.headerColor = "#212121"
+
           createUnityInstance(canvas, config, (progress) => {
             progressBarFull.style.width = 100 * progress + "%";
                 }).then((unityInstance) => {

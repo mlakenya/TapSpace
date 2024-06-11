@@ -1,0 +1,49 @@
+.desktop-stub {
+    font-family: Arial, sans-serif;
+    background-color:#091929;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    display: none;
+   /* background-image: url("https://raw.githubusercontent.com/mlakenya/TapSpace/main/Robot.png");
+    background-position: top center;
+    background-size: cover;*/
+}
+
+.divimg img{
+    display: flex;
+    width: 100%; /* Адаптивная ширина SVG */
+    height: auto; /* Автоматическая высота для сохранения пропорций */
+}
+
+.divimg {
+    display: flex;
+    text-align: center;
+    padding: 10px;
+    max-width: 400px;
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+}
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    max-width: 350px; /* Максимальная ширина SVG */
+    margin-bottom: 10px;
+    flex-direction: column;
+}
+.aconteiner {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+}
+.aconteiner a{
+    max-width: 50%;
+}
+
+    
