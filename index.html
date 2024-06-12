@@ -34,10 +34,10 @@
       </div>
   
       <div class="aconteiner">
-        <a class="social-link" href="https://t.me/Tap_Space">
+        <a class="img-link" href="https://t.me/Tap_Space">
             <img class="social-img" src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(2).png"/>
         </a>
-        <a class="social-link" href="https://x.com/pg_primegames">
+        <a class="img-link" href="https://x.com/pg_primegames">
             <img class="social-img" src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(1).png"/>
         </a>
       </div>
@@ -119,76 +119,77 @@
 
         window.history.replaceState(null, '', window.location.pathname);
 
-        // const initData = tg.initData;
+        // User Data verification
+        var user_data_verified = false;
 
-        // fetch('http://localhost:8000/verify', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ initData: initData })
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     if (data.valid) {
-        //         console.log('Verification successful');
-        //     } else {
-        //         console.log('Verification failed');
-        //     }
-        // })
-        // .catch(error => console.error('Error:', error));
+        const initData = tg.initData;
+        fetch('http://localhost:8000/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ init_data: initData })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.valid)
+                user_data_verified = true;
 
-        if (
-          tg.platform !== "android" && tg.platform !== "ios" || // 1) Check telegram platform
-          !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) // 2) Check via userAgent
-        ) { 
-          var stub = document.getElementById('desktop-stub');
-          container.parentNode.removeChild(container);
+            if (
+              tg.platform !== "android" && tg.platform !== "ios" ||     // 1) Check telegram platform
+              !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || // 2) Check via userAgent
+              !user_data_verified                                       // 3) Check user hash
+            ) { 
+              // Showing desctob stub instead of a game.
+              var stub = document.getElementById('desktop-stub');
+              container.parentNode.removeChild(container);
 
-          stub.style.display = "flex";
-          stub.style.flexDirection = "column";
-        }
-        else {
-          tg.enableClosingConfirmation();
+              stub.style.display = "flex";
+              stub.style.flexDirection = "column";
+            }
+            else {
+              tg.enableClosingConfirmation();
 
-          // tg.onEvent('viewportChanged', () => tg.expand())
+              // tg.onEvent('viewportChanged', () => tg.expand())
 
-          // const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
+              // const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
 
-          // if (!isScrollable) {
-          //   /*
-          //   Set the document's height to 100 % of
-          //   the viewport height plus one extra pixel
-          //   to make it scrollable.
-          //   */
-          //   console.log("make document bogger");
-          //   document.documentElement.style.setProperty(
-          //     "height",
-          //     "calc(100vh + 1px)",
-          //     "important"
-          //   );
-          // }
+              // if (!isScrollable) {
+              //   /*
+              //   Set the document's height to 100 % of
+              //   the viewport height plus one extra pixel
+              //   to make it scrollable.
+              //   */
+              //   console.log("make document bogger");
+              //   document.documentElement.style.setProperty(
+              //     "height",
+              //     "calc(100vh + 1px)",
+              //     "important"
+              //   );
+              // }
 
-          // function preventCollapse(event) {
-          //   if (window.scrollY === 0) {
-          //     window.scrollTo(0, 1);
-          //   }
-          // }
+              // function preventCollapse(event) {
+              //   if (window.scrollY === 0) {
+              //     window.scrollTo(0, 1);
+              //   }
+              // }
 
-          // // Attach the above function to the touchstart event handler of the scrollable element
-          // document.documentElement.addEventListener("touchstart", preventCollapse);
+              // // Attach the above function to the touchstart event handler of the scrollable element
+              // document.documentElement.addEventListener("touchstart", preventCollapse);
 
-          createUnityInstance(canvas, config, (progress) => {
-            progressBarFull.style.width = 100 * progress + "%";
-                }).then((unityInstance) => {
-                  loadingBar.style.display = "none";
-                  fullscreenButton.onclick = () => {
-                    unityInstance.SetFullscreen(1);
-                  };
-                }).catch((message) => {
-                  alert(message);
-                });
-        }
+              createUnityInstance(canvas, config, (progress) => {
+                progressBarFull.style.width = 100 * progress + "%";
+                    }).then((unityInstance) => {
+                      loadingBar.style.display = "none";
+                      fullscreenButton.onclick = () => {
+                        unityInstance.SetFullscreen(1);
+                      };
+                    }).catch((message) => {
+                      alert(message);
+                    });
+            }
+        })
+        .catch(error => console.error('Error:', error));
       };
 
       document.body.appendChild(script);
