@@ -69,12 +69,12 @@
     justify-content: center; /* Ensuring flex children are centered */
 }
 
-.social-link:hover {
+.aconteiner .social-link:hover {
     background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
     background-color: #476e9e;
 }
 
-.social-link:active {
+.aconteiner .social-link:active {
     position: relative;
     top: 1px;
 }
