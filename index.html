@@ -25,16 +25,21 @@
         <div id="unity-build-title">Tap Space</div>
       </div>
     </div>
-    <div class="desktop-stub" id="desktop-stub" style="display: none;">
-      <div class="divimg">
+    <div class="maindiv" id="desktop-stub">
+      <div class="div-title">
+        <img class="text-container" src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/play-on-phone.png"/>
+      </div>
+      <div class="divimg">                
         <img class="img-container" src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/Robot.png" />
       </div>
-      <div class="divimg">
-          <img src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/play-on-phone.png">
-      </div>
+  
       <div class="aconteiner">
-          <a href="https://t.me/Tap_Space"><img src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(2).png"/></a>
-          <a href="https://x.com/pg_primegames"><img src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(1).png"/></a>            
+        <a class="social-link" href="https://t.me/Tap_Space">
+            <img class="social-img" src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(2).png"/>
+        </a>
+        <a class="social-link" href="https://x.com/pg_primegames">
+            <img class="social-img" src="https://raw.githubusercontent.com/mlakenya/TapSpace/main/icons%20(1).png"/>
+        </a>
       </div>
     </div>
     <script>
@@ -112,6 +117,25 @@
 
         window.history.replaceState(null, '', window.location.pathname);
 
+        const initData = tg.initData;
+
+        fetch('http://localhost:8000/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ initData: initData })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.valid) {
+                console.log('Verification successful');
+            } else {
+                console.log('Verification failed');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
         if (
           tg.platform !== "android" && tg.platform !== "ios" || // 1) Check telegram platform
           !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) // 2) Check via userAgent
@@ -136,12 +160,22 @@
             the viewport height plus one extra pixel
             to make it scrollable.
             */
+            console.log("make document bogger");
             document.documentElement.style.setProperty(
               "height",
               "calc(100vh + 1px)",
               "important"
             );
           }
+
+          function preventCollapse(event) {
+            if (window.scrollY === 0) {
+              window.scrollTo(0, 1);
+            }
+          }
+
+          // Attach the above function to the touchstart event handler of the scrollable element
+          document.documentElement.addEventListener("touchstart", preventCollapse);
 
           createUnityInstance(canvas, config, (progress) => {
             progressBarFull.style.width = 100 * progress + "%";
