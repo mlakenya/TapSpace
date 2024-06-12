@@ -62,7 +62,7 @@
     box-shadow:inset 0px 1px 3px 0px #9fb4f2;
     border-radius:100%;
     border:3px #1c89bf;
-    display:flex;
+    display:flex !important; 
     cursor:pointer;
     color:#ffffff;
 }
