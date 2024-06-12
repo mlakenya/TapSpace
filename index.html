@@ -108,8 +108,8 @@
       script.onload = () => {
         var tg = window.Telegram.WebApp;
         tg.headerColor = "#212121";
+        tg.backgroundColor = "#212121";
         tg.expand();
-        tg.enableClosingConfirmation();
 
         var user = tg.initDataUnsafe.user;
 
@@ -150,8 +150,9 @@
           stub.style.flexDirection = "column";
         }
         else {
+          tg.enableClosingConfirmation();
+
           // tg.onEvent('viewportChanged', () => tg.expand())
-          
 
           // const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
 
