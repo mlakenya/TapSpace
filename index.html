@@ -111,6 +111,7 @@
         tg.expand();
 
         var user = tg.initDataUnsafe.user;
+        console.log(user);
 
         const url = new URL(window.location.href);
 
@@ -123,22 +124,21 @@
         var user_data_verified = false;
 
         const initData = tg.initData;
-        fetch('http://localhost:8000/verify', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ init_data: initData })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.valid)
-                user_data_verified = true;
-
+        // fetch('http://localhost:8000/verify', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ init_data: initData })
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     if (data.valid)
+        //         user_data_verified = true;
             if (
               tg.platform !== "android" && tg.platform !== "ios" ||     // 1) Check telegram platform
-              !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || // 2) Check via userAgent
-              !user_data_verified                                       // 3) Check user hash
+              !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)    // 2) Check via userAgent
+              // !user_data_verified                                       // 3) Check user tg hash
             ) { 
               // Showing desctob stub instead of a game.
               var stub = document.getElementById('desktop-stub');
@@ -150,33 +150,6 @@
             else {
               tg.enableClosingConfirmation();
 
-              // tg.onEvent('viewportChanged', () => tg.expand())
-
-              // const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
-
-              // if (!isScrollable) {
-              //   /*
-              //   Set the document's height to 100 % of
-              //   the viewport height plus one extra pixel
-              //   to make it scrollable.
-              //   */
-              //   console.log("make document bogger");
-              //   document.documentElement.style.setProperty(
-              //     "height",
-              //     "calc(100vh + 1px)",
-              //     "important"
-              //   );
-              // }
-
-              // function preventCollapse(event) {
-              //   if (window.scrollY === 0) {
-              //     window.scrollTo(0, 1);
-              //   }
-              // }
-
-              // // Attach the above function to the touchstart event handler of the scrollable element
-              // document.documentElement.addEventListener("touchstart", preventCollapse);
-
               createUnityInstance(canvas, config, (progress) => {
                 progressBarFull.style.width = 100 * progress + "%";
                     }).then((unityInstance) => {
@@ -187,9 +160,12 @@
                     }).catch((message) => {
                       alert(message);
                     });
+
+              unityInstance.SendMessage('Initializator', 'SetUserId', user.id);
+              // unityInstance.SendMessage('Initializator', 'SetMasterId', );
             }
-        })
-        .catch(error => console.error('Error:', error));
+        // })
+        // .catch(error => console.error('Error:', error));
       };
 
       document.body.appendChild(script);
