@@ -111,7 +111,6 @@
         tg.expand();
 
         var user = tg.initDataUnsafe.user;
-        console.log(user);
 
         const url = new URL(window.location.href);
 
@@ -162,7 +161,10 @@
                     });
 
               unityInstance.SendMessage('Initializator', 'SetUserId', user.id);
-              // unityInstance.SendMessage('Initializator', 'SetMasterId', );
+              if (master_id)
+                unityInstance.SendMessage('Initializator', 'SetMasterId', master_id);
+              else
+              unityInstance.SendMessage('Initializator', 'SetMasterId', "");
             }
         // })
         // .catch(error => console.error('Error:', error));
