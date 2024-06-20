@@ -153,7 +153,9 @@
               document.body.style.marginTop = `${overflow}px`
               document.body.style.height = window.innerHeight + overflow + "px"
               document.body.style.paddingBottom = `${overflow}px`
-              window.scrollTo(0, overflow)
+              requestAnimationFrame(() => {
+                window.scrollTo(0, overflow);
+              });
 
               let ts;
               const onTouchStart = (e) => {
@@ -172,7 +174,6 @@
               };
               document.documentElement.addEventListener('touchstart', onTouchStart, { passive: false });
               document.documentElement.addEventListener('touchmove', onTouchMove, { passive: false });
-              window.scrollTo(0, overflow)
 
               createUnityInstance(canvas, config, (progress) => {
                 progressBarFull.style.width = 100 * progress + "%";
@@ -185,7 +186,6 @@
                       alert(message);
                     });
 
-              window.scrollTo(0, overflow)
 
               unityInstance.SendMessage('Initializator', 'SetUserId', user.id);
               if (master_id)
