@@ -44,6 +44,10 @@
         </a>
       </div>
     </div>
+    <div class="landscape-stub" id="landscape-stub">
+      <p class="main-message">This orientation is not supported</p>
+      <p class="sub-message">Please rotate back your device</p>
+    </div>  
     <script src="https://unpkg.com/@tma.js/sdk@2.5.0/dist/index.iife.js"></script>
     <script>
       var container = document.querySelector("#unity-container");
@@ -198,6 +202,17 @@
                 unityInstance.SendMessage('Initializator', 'SetMasterId', master_id);
               else
               unityInstance.SendMessage('Initializator', 'SetMasterId', "");
+
+              let portrait = window.matchMedia("(orientation: portrait)");
+
+              portrait.addEventListener("change", function(e) {
+                console.log("Orientation change");
+                if(e.matches) {
+                  document.getElementById('landscape-stub').style.display = "none";
+                } else {
+                  document.getElementById('landscape-stub').style.display = "block";
+                }
+              })
             }
       //   })
       //   .catch(error => console.error('Error:', error));
