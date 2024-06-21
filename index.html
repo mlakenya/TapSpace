@@ -140,10 +140,30 @@
         container.classList.add('mobile-content');
       })();
 
-      window.addEventListener("resize", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }, false);
+      function resizeCanvas() {
+        const aspectRatio = canvas.width / canvas.height;
+
+        if (window.innerWidth / window.innerHeight > aspectRatio) {
+            canvas.height = window.innerHeight;
+            canvas.width = canvas.height * aspectRatio;
+        } else {
+            canvas.width = window.innerWidth;
+            canvas.height = canvas.width / aspectRatio;
+        }
+      }
+
+      // Initial setup
+      function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        resizeCanvas();
+      }
+
+      // Event listeners for resizing
+      window.addEventListener('resize', resizeCanvas);
+      window.addEventListener('orientationchange', resizeCanvas);
+
+      init();
 
 
       var script = document.createElement("script");
