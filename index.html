@@ -145,7 +145,7 @@
         try {
           postEvent('web_app_expand');
         } catch {
-          console.log("error");
+          document.getElementById('wrap').removeChild(container);
         }
 
         document.body.classList.add('mobile-body');
@@ -213,19 +213,19 @@
         // .then(data => {
         //     if (data.valid)
         //         user_data_verified = true;
-            if (
-              tg.platform !== "android" && tg.platform !== "ios" ||     // 1) Check telegram platform
-              !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)    // 2) Check via userAgent
-              // !user_data_verified                                       // 3) Check user tg hash
-            ) { 
-              // Showing desctob stub instead of a game.
-              var stub = document.getElementById('desktop-stub');
-              container.parentNode.removeChild(container);
+            // if (
+            //   tg.platform !== "android" && tg.platform !== "ios" ||     // 1) Check telegram platform
+            //   !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)    // 2) Check via userAgent
+            //   // !user_data_verified                                       // 3) Check user tg hash
+            // ) { 
+            //   // Showing desctob stub instead of a game.
+            //   var stub = document.getElementById('desktop-stub');
+            //   container.parentNode.removeChild(container);
 
-              stub.style.display = "flex";
-              stub.style.flexDirection = "column";
-            }
-            else {
+            //   stub.style.display = "flex";
+            //   stub.style.flexDirection = "column";
+            // }
+            // else {
               tg.enableClosingConfirmation();
 
               createUnityInstance(canvas, config, (progress) => {
@@ -245,7 +245,7 @@
                 unityInstance.SendMessage('Initializator', 'SetMasterId', master_id);
               else
               unityInstance.SendMessage('Initializator', 'SetMasterId', "");
-            }
+            // }
         // })
         // .catch(error => console.error('Error:', error));
       };
