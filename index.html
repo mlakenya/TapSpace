@@ -31,7 +31,7 @@
       }
     </style>
   </head>
-  <body>
+  <body class="body">
     <div id="wrap">
       <div id="unity-container" class="unity-desktop">
         <canvas id="unity-canvas" width=1080 height=1920 tabindex="-1"></canvas>
@@ -142,11 +142,15 @@
         }
 
         // Expand the application.
-        postEvent('web_app_expand');
+        try {
+          postEvent('web_app_expand');
+        } catch {
+          console.log("error");
+        }
 
         document.body.classList.add('mobile-body');
         document.getElementById('wrap').classList.add('mobile-wrap');
-        document.getElementById('content').classList.add('mobile-content');
+        container.classList.add('mobile-content');
       })();
       // const overflow = 100;
       // document.body.style.height = window.innerHeight + overflow + "px";
