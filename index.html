@@ -103,6 +103,39 @@
       canvas.style.background = "url('" + buildUrl + "/TSBuild.jpg') center / cover";
       loadingBar.style.display = "block";
 
+
+      // Disabling window scroll
+      // For telegram web app correct work
+      const overflow = 100
+      document.body.style.height = window.innerHeight + overflow + "px";
+      document.body.style.marginTop = `${overflow}px`;
+      document.body.style.paddingBottom = `${overflow}px`;
+      document.body.style.overflowY = 'hidden !important';
+      container.style.position = "relative";
+      container.style.height = `calc(100% - ${overflow}px)`;
+
+      requestAnimationFrame(() => {
+        window.scrollTo(0, overflow);
+      });
+
+      let ts;
+      const onTouchStart = (e) => {
+        ts = e.touches[0].clientY;
+      };  
+      const onTouchMove = (e) => {
+        if (scrollableEl) {
+          const scroll = scrollableEl.scrollTop;
+          const te = e.changedTouches[0].clientY;
+          if (scroll <= 0 && ts < te) {
+            e.preventDefault();
+          }
+        } else {
+          e.preventDefault();
+        }
+      };
+      document.documentElement.addEventListener('touchstart', onTouchStart, { passive: false });
+      document.documentElement.addEventListener('touchmove', onTouchMove, { passive: false });
+
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
@@ -148,33 +181,6 @@
             }
             else {
               tg.enableClosingConfirmation();
-              const overflow = 100
-              document.body.style.height = window.innerHeight + overflow + "px";
-              // document.body.style.overflowY = 'scroll'
-              document.body.style.marginTop = `${overflow}px`;
-              document.body.style.paddingBottom = `${overflow}px`;
-              // console.log("here");
-              window.scrollTo(0, overflow);
-              document.body.style.overflowY = 'hidden !important';
-              container.style.position = "relative";
-
-              let ts;
-              const onTouchStart = (e) => {
-                ts = e.touches[0].clientY;
-              };  
-              const onTouchMove = (e) => {
-                if (scrollableEl) {
-                  const scroll = scrollableEl.scrollTop;
-                  const te = e.changedTouches[0].clientY;
-                  if (scroll <= 0 && ts < te) {
-                    e.preventDefault();
-                  }
-                } else {
-                  e.preventDefault();
-                }
-              };
-              document.documentElement.addEventListener('touchstart', onTouchStart, { passive: false });
-              document.documentElement.addEventListener('touchmove', onTouchMove, { passive: false });
 
               createUnityInstance(canvas, config, (progress) => {
                 progressBarFull.style.width = 100 * progress + "%";
