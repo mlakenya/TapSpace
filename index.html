@@ -149,12 +149,14 @@
             else {
               tg.enableClosingConfirmation();
               const overflow = 100
-              document.body.style.overflowY = 'scroll'
-              document.body.style.marginTop = `${overflow}px`
-              document.body.style.height = window.innerHeight + overflow + "px"
-              document.body.style.paddingBottom = `${overflow}px`
+              document.body.style.height = window.innerHeight + overflow + "px";
+              // document.body.style.overflowY = 'scroll'
+              document.body.style.marginTop = `${overflow}px`;
+              document.body.style.paddingBottom = `${overflow}px`;
+              // console.log("here");
               window.scrollTo(0, overflow);
-              document.body.style.overflowY = 'hidden !important'
+              document.body.style.overflowY = 'hidden !important';
+              container.style.position = "relative";
 
               let ts;
               const onTouchStart = (e) => {
