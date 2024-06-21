@@ -3,26 +3,50 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Tap Space</title>
+    <title>Tap Space</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="stylesheet" href="stub.css">
+    <style>
+      .mobile-body {
+        overflow: hidden;
+        height: 100vh;
+      }
+  
+      .mobile-wrap {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background: red;
+      }
+  
+      .mobile-content {
+        height: calc(100% + 1px);
+        background: green;
+      }
+    </style>
   </head>
   <body>
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=1080 height=1920 tabindex="-1"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
+    <div id="wrap">
+      <div id="unity-container" class="unity-desktop">
+        <canvas id="unity-canvas" width=1080 height=1920 tabindex="-1"></canvas>
+        <div id="unity-loading-bar">
+          <div id="unity-logo"></div>
+          <div id="unity-progress-bar-empty">
+            <div id="unity-progress-bar-full"></div>
+          </div>
         </div>
-      </div>
-      <div id="unity-warning"> </div>
-      <div id="unity-footer">
-        <div id="unity-webgl-logo"></div>
-        <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">Tap Space</div>
+        <div id="unity-warning"> </div>
+        <div id="unity-footer">
+          <div id="unity-webgl-logo"></div>
+          <div id="unity-fullscreen-button"></div>
+          <div id="unity-build-title">Tap Space</div>
+        </div>
       </div>
     </div>
     <div class="maindiv" id="desktop-stub">
@@ -42,6 +66,7 @@
         </a>
       </div>
     </div>
+    <script src="https://unpkg.com/@tma.js/sdk@2.5.0/dist/index.iife.js"></script>
     <script>
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
@@ -106,17 +131,23 @@
 
       // Disabling window scroll
       // For telegram web app correct work
-      container.style.backgroundColor = "#0f1430";
-      container.style.height = "calc(100% + 1px)";
-      container.style.overflowX = "hidden";
-      container.style.overflowX = "auto";
-      container.style.position = "absolute";
-      container.style.left = "0";
-      container.style.top = "0";
-      container.style.right = "0";
-      container.style.bottom = "0";
-      document.body.style.overflow = "hidden";
-      document.body.style.height = "100vh";
+      (function() {
+        console.log(window.tmajs);
+        var { retrieveLaunchParams, postEvent } = window.tmajs.sdk;
+        var lp = retrieveLaunchParams();
+
+        // Some versions of Telegram don't need the classes above.
+        if (['macos', 'tdesktop', 'weba', 'web', 'webk'].includes(lp.platform)) {
+          return;
+        }
+
+        // Expand the application.
+        postEvent('web_app_expand');
+
+        document.body.classList.add('mobile-body');
+        document.getElementById('wrap').classList.add('mobile-wrap');
+        document.getElementById('content').classList.add('mobile-content');
+      })();
       // const overflow = 100;
       // document.body.style.height = window.innerHeight + overflow + "px";
       // document.body.style.marginTop = `${overflow}px`;
