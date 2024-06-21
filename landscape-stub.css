@@ -22,8 +22,7 @@
     color: #ffffff;
 }
 
-@media screen and (orientation:landscape)
-{
+@media screen and (orientation:landscape) {
 	.landscape-stub {
 		display: flex;
 		flex-direction: column;
@@ -31,9 +30,7 @@
 	}
 }
 
-
-@media screen and (orientation:portrait)
-{
+@media screen and (orientation:portrait) {
 	.landscape-stub {
 		display: none;
 	}

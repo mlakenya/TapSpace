@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="stylesheet" href="stub.css">
     <link rel="stylesheet" href="landscape-stub.css">
+    <link rel="stylesheet" href="content.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
   </head>
-  <body class="body">
+  <body>
     <div id="wrap">
       <div id="unity-container" class="unity-desktop">
         <canvas id="unity-canvas" width=1080 height=1920 tabindex="-1"></canvas>
@@ -140,31 +141,22 @@
         container.classList.add('mobile-content');
       })();
 
-      function resizeCanvas() {
+      function resizeCanvas(e) {
+        console.log("resize");
+        console.log(e);
         const aspectRatio = canvas.width / canvas.height;
-
-        if (window.innerWidth / window.innerHeight > aspectRatio) {
-            canvas.height = window.innerHeight;
-            canvas.width = canvas.height * aspectRatio;
-        } else {
-            canvas.width = window.innerWidth;
-            canvas.height = canvas.width / aspectRatio;
+        console.log(aspectRatio);
+        console.log(`window size ${window.innerHeight}: ${window.innerWidth}`)
+        if (window.innerHeight > window.innerWidth) {
+          console.log(canvas.style);
+          container.style.height = `${window.innerHeight} !important`;
+          container.style.width = `${window.innerHeight * aspectRatio} !important`
         }
+
+        e.stopPropagation();
       }
 
-      // Initial setup
-      function init() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        resizeCanvas();
-      }
-
-      // Event listeners for resizing
-      window.addEventListener('resize', resizeCanvas);
       window.addEventListener('orientationchange', resizeCanvas);
-
-      init();
-
 
       var script = document.createElement("script");
       script.src = loaderUrl;
