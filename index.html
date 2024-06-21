@@ -8,28 +8,6 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="stylesheet" href="stub.css">
-    <style>
-      .mobile-body {
-        overflow: hidden;
-        height: 100vh;
-      }
-  
-      .mobile-wrap {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        overflow-x: hidden;
-        overflow-y: auto;
-        background: red;
-      }
-  
-      .mobile-content {
-        height: calc(100% + 1px);
-        background: green;
-      }
-    </style>
   </head>
   <body class="body">
     <div id="wrap">
@@ -130,7 +108,10 @@
 
 
       // Disabling window scroll
-      // For telegram web app correct work
+      // Solution from mini apps docs:
+      // https://docs.telegram-mini-apps.com/platform/sticky-app
+      // IT CAN CAUSE UNDEFINED BEHAVOUR!!
+      // Vladimir Kivanov
       (function() {
         console.log(window.tmajs);
         var { retrieveLaunchParams, postEvent } = window.tmajs.sdk;
@@ -144,43 +125,15 @@
         // Expand the application.
         try {
           postEvent('web_app_expand');
-        } catch {
-          document.getElementById('wrap').removeChild(container);
+        } catch (error) {
+          console.log(error);
         }
 
         document.body.classList.add('mobile-body');
         document.getElementById('wrap').classList.add('mobile-wrap');
         container.classList.add('mobile-content');
       })();
-      // const overflow = 100;
-      // document.body.style.height = window.innerHeight + overflow + "px";
-      // document.body.style.marginTop = `${overflow}px`;
-      // document.body.style.paddingBottom = `${overflow}px`;
-      // document.body.style.overflowY = 'hidden !important';
-      // container.style.position = "relative";
-      // container.style.height = `calc(100% - ${overflow}px)`;
 
-      // requestAnimationFrame(() => {
-      //   window.scrollTo(0, overflow);
-      // });
-
-      // let ts;
-      // const onTouchStart = (e) => {
-      //   ts = e.touches[0].clientY;
-      // };  
-      // const onTouchMove = (e) => {
-      //   if (scrollableEl) {
-      //     const scroll = scrollableEl.scrollTop;
-      //     const te = e.changedTouches[0].clientY;
-      //     if (scroll <= 0 && ts < te) {
-      //       e.preventDefault();
-      //     }
-      //   } else {
-      //     e.preventDefault();
-      //   }
-      // };
-      // document.documentElement.addEventListener('touchstart', onTouchStart, { passive: false });
-      // document.documentElement.addEventListener('touchmove', onTouchMove, { passive: false });
 
       var script = document.createElement("script");
       script.src = loaderUrl;
@@ -213,19 +166,19 @@
         // .then(data => {
         //     if (data.valid)
         //         user_data_verified = true;
-            // if (
-            //   tg.platform !== "android" && tg.platform !== "ios" ||     // 1) Check telegram platform
-            //   !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)    // 2) Check via userAgent
-            //   // !user_data_verified                                       // 3) Check user tg hash
-            // ) { 
-            //   // Showing desctob stub instead of a game.
-            //   var stub = document.getElementById('desktop-stub');
-            //   container.parentNode.removeChild(container);
+            if (
+              tg.platform !== "android" && tg.platform !== "ios"           // 1) Check telegram platform
+              || !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)    // 2) Check via userAgent
+              // || !user_data_verified                                    // 3) Check user tg hash
+            ) { 
+              // Showing desctob stub instead of a game.
+              var stub = document.getElementById('desktop-stub');
+              container.parentNode.removeChild(container);
 
-            //   stub.style.display = "flex";
-            //   stub.style.flexDirection = "column";
-            // }
-            // else {
+              stub.style.display = "flex";
+              stub.style.flexDirection = "column";
+            }
+            else {
               tg.enableClosingConfirmation();
 
               createUnityInstance(canvas, config, (progress) => {
@@ -245,9 +198,9 @@
                 unityInstance.SendMessage('Initializator', 'SetMasterId', master_id);
               else
               unityInstance.SendMessage('Initializator', 'SetMasterId', "");
-            // }
-        // })
-        // .catch(error => console.error('Error:', error));
+            }
+      //   })
+      //   .catch(error => console.error('Error:', error));
       };
 
       document.body.appendChild(script);
