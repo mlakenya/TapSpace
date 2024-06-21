@@ -8,6 +8,8 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="stylesheet" href="stub.css">
+    <link rel="stylesheet" href="landscape-stub.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body class="body">
     <div id="wrap">
@@ -201,18 +203,7 @@
               if (master_id)
                 unityInstance.SendMessage('Initializator', 'SetMasterId', master_id);
               else
-              unityInstance.SendMessage('Initializator', 'SetMasterId', "");
-
-              let portrait = window.matchMedia("(orientation: portrait)");
-
-              portrait.addEventListener("change", function(e) {
-                console.log("Orientation change");
-                if(e.matches) {
-                  document.getElementById('landscape-stub').style.display = "none";
-                } else {
-                  document.getElementById('landscape-stub').style.display = "block";
-                }
-              })
+                unityInstance.SendMessage('Initializator', 'SetMasterId', "");
             }
       //   })
       //   .catch(error => console.error('Error:', error));
